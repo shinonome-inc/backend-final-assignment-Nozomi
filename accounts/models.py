@@ -5,5 +5,4 @@ from django.db import models
 class User(AbstractUser):
     email = models.EmailField()
 
-# class FriendShip(models.Model):
-    
+# class FriendShip(models.Model): 

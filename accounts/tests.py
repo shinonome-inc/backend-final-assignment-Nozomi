@@ -1,4 +1,5 @@
-from django.contrib.auth import SESSION_KEY, get_user_model
+
+from django.contrib.auth import SESSION_KEY
 from django.test import TestCase
 from django.urls import reverse
 from .models import User
@@ -34,24 +35,22 @@ class TestSignupView(TestCase):
         self.assertIn(SESSION_KEY, self.client.session)
 
 
+# def test_failure_post_with_empty_form(self):
 
-#   def test_failure_post_with_empty_form(self):
-
-
-    def test_failure_post_with_empty_username(self):
-        invalid_data = {
+def test_failure_post_with_empty_username(self):
+    invalid_data = {
             "username": "",
             "email": "test@test.com",
             "password1": "testpassword",
             "password2": "testpassword",
         }
-        response = self.client.post(self.url, invalid_data)
-        form = response.context["form"]
+    response = self.client.post(self.url, invalid_data)
+    form = response.context["form"]
 
-        self.assertEqual(response.status_code, 200)
-        self.assertFalse(User.objects.filter(username=invalid_data["username"]).exists())
-        self.assertFalse(form.is_valid())
-        self.assertIn("このフィールドは必須です。", form.errors["username"])
+    self.assertEqual(response.status_code, 200)
+    self.assertFalse(User.objects.filter(username=invalid_data["username"]).exists())
+    self.assertFalse(form.is_valid())
+    self.assertIn("このフィールドは必須です。", form.errors["username"])
 
 
 #     def test_failure_post_with_empty_email(self):

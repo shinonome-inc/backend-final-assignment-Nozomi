@@ -1,8 +1,9 @@
-from django.shortcuts import render
+# from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from .forms import SignupForm
+
 
 class SignupView(CreateView):
     form_class = SignupForm
