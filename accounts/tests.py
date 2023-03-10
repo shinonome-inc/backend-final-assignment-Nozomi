@@ -10,7 +10,7 @@ from .models import User
 class TestSignupView(TestCase):
     def setUp(self):
         self.url = reverse("accounts:signup")
-        
+
     def test_success_get(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
@@ -24,7 +24,7 @@ class TestSignupView(TestCase):
             "password2": "testpassword",
         }
         response = self.client.post(self.url, valid_data)
- 
+
         self.assertRedirects(
             response,
             reverse("tweets:home"),
