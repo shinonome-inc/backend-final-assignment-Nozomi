@@ -1,4 +1,3 @@
-
 from django.contrib.auth import SESSION_KEY
 from django.test import TestCase
 from django.urls import reverse
@@ -37,6 +36,7 @@ class TestSignupView(TestCase):
 
 
 # def test_failure_post_with_empty_form(self):
+
 
 def test_failure_post_with_empty_username(self):
     invalid_data = {
