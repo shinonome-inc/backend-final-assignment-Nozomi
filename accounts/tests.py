@@ -2,6 +2,7 @@
 from django.contrib.auth import SESSION_KEY
 from django.test import TestCase
 from django.urls import reverse
+
 from .models import User
 
 # User = get_user_model
