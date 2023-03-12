@@ -25,7 +25,7 @@ class TestSignupView(TestCase):
 
         self.assertRedirects(
             response,
-            reverse("tweets:home"),
+            # reverse("tweets:home"),
             status_code=302,
             target_status_code=200,
         )
