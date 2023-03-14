@@ -62,10 +62,10 @@ class TestSignupView(TestCase):
 
     def test_failure_post_with_empty_email(self):
         data_with_empty_email = {
-                "email": "",
-                "username": "testuser",
-                "password1": "testpassword",
-                "password2": "testpassword",
+            "email": "",
+            "username": "testuser",
+            "password1": "testpassword",
+            "password2": "testpassword",
         }
         response = self.client.post(self.url, data_with_empty_email)
         self.assertEqual(response.status_code, 200)
@@ -135,7 +135,7 @@ class TestSignupView(TestCase):
 
         form = response.context["form"]
         self.assertFalse(form.is_valid())
-        self.assertEqual(form.errors["password2"], ["このパスワードは短すぎます。最低 8 文字以上必要です。", "このパスワードは一般的すぎます。"])
+        self.assertEqual(["このパスワードは短すぎます。最低 8 文字以上必要です。", form.errors["password2"],  "このパスワードは一般的すぎます。"])
 
     def test_failure_post_with_password_similar_to_username(self):
         data_similar_to_username = {
