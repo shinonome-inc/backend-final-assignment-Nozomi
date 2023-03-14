@@ -135,7 +135,7 @@ class TestSignupView(TestCase):
 
         form = response.context["form"]
         self.assertFalse(form.is_valid())
-        self.assertEqual(["このパスワードは短すぎます。最低 8 文字以上必要です。", form.errors["password2"], "このパスワードは一般的すぎます。"])
+        self.assertIn("このパスワードは短すぎます。最低 8 文字以上必要です。", form.errors["password2"])
 
     def test_failure_post_with_password_similar_to_username(self):
         data_similar_to_username = {
