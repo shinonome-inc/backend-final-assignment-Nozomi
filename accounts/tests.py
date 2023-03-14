@@ -25,7 +25,7 @@ class TestSignupView(TestCase):
 
         self.assertRedirects(
             response,
-            # reverse("tweets:home"),
+            reverse("tweets:home"),
             status_code=302,
             target_status_code=200,
         )
@@ -98,7 +98,7 @@ class TestSignupView(TestCase):
             "password1": "testpassword",
             "password2": "testpassword",
         }
-        User.objects.create_user(username="test", password="goodpassword")
+        User.objects.create_user(username="testuser", password="testpassword")
         response = self.client.post(self.url, data_with_duplicated_user)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(User.objects.count(), 1)
