@@ -42,6 +42,9 @@ class TestSignupView(TestCase):
         response = self.client.post(self.url, invalid_data)
         form = response.context["form"]
 
+        print(response.context)
+        print(form)
+
     def test_failure_post_with_empty_username(self):
         invalid_data = {
             "username": "",
