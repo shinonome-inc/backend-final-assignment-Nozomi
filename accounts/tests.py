@@ -44,7 +44,7 @@ class TestSignupView(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(User.objects.count(), 0)
-        self.assertIn("このフィールドは必須です", forms.errors)
+        self.assertIn("このフィールドは必須です", form.errors)
 
     def test_failure_post_with_empty_username(self):
         invalid_data = {
