@@ -40,8 +40,11 @@ class TestSignupView(TestCase):
             "password2": "testpassword",
         }
         response = self.client.post(self.url, invalid_data)
+        form = response.context["form"]
 
-        print(response.context)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(User.objects.count(), 0)
+        self.assertIn("このフィールドは必須です", forms.errors)
 
     def test_failure_post_with_empty_username(self):
         invalid_data = {
