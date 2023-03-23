@@ -2,8 +2,10 @@
 from django.contrib.auth import authenticate, login
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView, LogoutView
 
-from .forms import SignupForm
+from .forms import SignupForm, LoginForm
 
 
 class SignupView(CreateView):
@@ -18,3 +20,12 @@ class SignupView(CreateView):
         user = authenticate(self.request, username=username, password=password)
         login(self.request, user)
         return response
+
+
+class Login(LoginView):
+    form_class = LoginForm
+    template_name = "accounts/login.html"
+
+
+class Logout(LoginRequiredMixin, LogoutView):
+    template_name = "accounts/login.html"
