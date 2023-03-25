@@ -17,7 +17,14 @@
   "python.linting.flake8Enabled": true,
   "python.linting.flake8Args": [],
   "[python]": {
-    "editor.tabSize": 4,
-    "editor.defaultFormatter": "ms-python.python"
+    "editor.defaultFormatter": null,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    }
   },
+  "isort.args": [
+      "--profile",
+      "black"
+  ],
 }
