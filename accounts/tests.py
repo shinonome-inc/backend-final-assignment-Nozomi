@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import SESSION_KEY, get_user_model
 from django.test import TestCase
 from django.urls import reverse
@@ -212,7 +213,7 @@ class TestLoginView(TestCase):
 
         self.assertRedirects(
             response,
-            reverse("tweets:home"),
+            reverse(settings.LOGIN_REDIRECT_URL),
             status_code=302,
             target_status_code=200,
         )
@@ -227,9 +228,10 @@ class TestLoginView(TestCase):
         form = response.context["form"]
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(User.objects.count(), 0)
         self.assertFalse(form.is_valid())
-        self.assertIn("このフィールドは必須です。", form.errors["username"])
+        self.assertIn(
+            "正しいユーザー名とパスワードを入力してください。どちらのフィールドも大文字と小文字は区別されます。",
+            form.errors["__all__"])
         self.assertNotIn(SESSION_KEY, self.client.session)
 
     def test_failure_post_with_empty_password(self):
@@ -241,9 +243,8 @@ class TestLoginView(TestCase):
         form = response.context["form"]
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(User.objects.count(), 0)
         self.assertFalse(form.is_valid())
-        self.assertIn("このフィールドは必須です。", form.errors["username"])
+        self.assertIn("このフィールドは必須です。", form.errors["password"])
         self.assertNotIn(SESSION_KEY, self.client.session)
 
 
@@ -253,19 +254,13 @@ class TestLogoutView(TestCase):
             username="testuser",
             password="testpassword",
         )
-        self.url = reverse("tweets:home")
+        self.client.login(username="testuser", password="testpassword")
 
     def test_success_post(self):
-        valid_data = {
-            "username": "testuser",
-            "email": "test@test.com",
-            "password": "testpassword",
-        }
-        response = self.client.post(self.url, valid_data)
-
+        response = self.client.post(reverse("accounts:logout"))
         self.assertRedirects(
             response,
-            reverse("accounts:login"),
+            reverse(settings.LOGOUT_REDIRECT_URL),
             status_code=302,
             target_status_code=200,
         )
