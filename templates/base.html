@@ -10,10 +10,15 @@
 
     <title>{% block title %}Twitter Clone{% endblock %}</title>
   </head>
+  
   <body>
-   
-    {% block header %}
-    {% endblock header %}
+    {% if request.user.is_authenticated %}
+    <form action="{% url 'accounts:logout' %}" method="post">{% csrf_token %}
+      <button type="submit">ログアウト</button>
+    </form>
+    {% else %}
+      <a href={% url "accounts:login" %}>ログイン</a>
+    {% endif %}
 
     {% block content %}
     {% endblock content %}
