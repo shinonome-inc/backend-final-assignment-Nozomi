@@ -28,8 +28,8 @@ class LoginView(auth_views.LoginView):
     template_name = "accounts/login.html"
 
 
-class LogoutView(LoginRequiredMixin, auth_views.LogoutView):
-    template_name = "accounts/login.html"
+class LogoutView(auth_views.LogoutView):
+    pass
 
 
 class UserProfileView(LoginRequiredMixin, DetailView):

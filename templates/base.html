@@ -13,8 +13,9 @@
   
   <body>
     {% if request.user.is_authenticated %}
-      [{{ request.user.username }}]
-      <a href={% url "accounts:logout" %}>ログアウト</a>
+    <form action="{% url 'accounts:logout' %}" method="post">{% csrf_token %}
+      <button type="submit">ログアウト</button>
+    </form>
     {% else %}
       <a href={% url "accounts:login" %}>ログイン</a>
     {% endif %}
