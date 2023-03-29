@@ -10,10 +10,14 @@
 
     <title>{% block title %}Twitter Clone{% endblock %}</title>
   </head>
+  
   <body>
-   
-    {% block header %}
-    {% endblock header %}
+    {% if request.user.is_authenticated %}
+      [{{ request.user.username }}]
+      <a href={% url "accounts:logout" %}>ログアウト</a>
+    {% else %}
+      <a href={% url "accounts:login" %}>ログイン</a>
+    {% endif %}
 
     {% block content %}
     {% endblock content %}
