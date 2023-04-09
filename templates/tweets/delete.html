@@ -1,4 +1,4 @@
-{% url 'tweets:delete' %}
+{% url 'tweets:delete' pk %}
 
 {% block content %}
 <form method="post">{% csrf_token %}

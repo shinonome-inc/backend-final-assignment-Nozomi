@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Tweet(models.Model):
-    content = models.TextField()
+    content = models.CharField(max_length=150)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 

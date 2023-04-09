@@ -13,7 +13,6 @@ class TestHomeView(TestCase):
         self.url = reverse(settings.LOGIN_REDIRECT_URL)
         self.user = User.objects.create_user(
             username="testuser",
-            email="test@test.com",
             password="testpassword",
         )
         self.client.login(username="testuser", password="testpassword")
@@ -21,9 +20,9 @@ class TestHomeView(TestCase):
     def test_success_get(self):
         response = self.client.get(self.url)
         self.assertQuerysetEqual(
-            response.context["tweet_list"],
+            response.context["object_list"],
             Tweet.objects.order_by("-created_at"),
-            ordered=False,
+            Tweet.objects.all()
         )
 
 

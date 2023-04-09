@@ -11,7 +11,7 @@
         <p>コメント：{{object.content}}</p>
 
         {% if object.user == request.user %}
-        <a href="{% url 'delete' pk %}" class="btn btn-danger ms-3" tabindex="-1" role="button" aria-disabled="true">削除</a>
+        <a href="{% url 'tweets:delete' tweet.pk %}" class="btn btn-danger ms-3" tabindex="-1" role="button" aria-disabled="true">削除</a>
         {% endif %}
     </div>
 </div>

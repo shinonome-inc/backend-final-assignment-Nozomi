@@ -10,6 +10,7 @@ from .models import Tweet
 class HomeView(LoginRequiredMixin, ListView):
     template_name = "tweets/home.html"
     model = Tweet
+    context_object_name = 'tweet'
 
     def get_queryset(self):
         return Tweet.objects.filter(user=self.request.user)

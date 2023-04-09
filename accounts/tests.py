@@ -279,7 +279,7 @@ class TestUserProfileView(TestCase):
     def test_success_get(self):
         response = self.client.get(self.url)
         context = response.context
-        self.assertQuerysetEqual(context["Tweet_list"], Tweet.objects.filter(user=self.user))
+        self.assertQuerysetEqual(context['tweet'], Tweet.objects.filter(user=self.user))
 
 
 # class TestUserProfileEditView(TestCase):
