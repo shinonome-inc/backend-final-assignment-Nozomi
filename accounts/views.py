@@ -2,8 +2,11 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, ListView
+
+from tweets.models import Tweet
 
 from .admin import User
 from .forms import LoginForm, SignupForm
@@ -32,8 +35,19 @@ class LogoutView(auth_views.LogoutView):
     pass
 
 
-class UserProfileView(LoginRequiredMixin, DetailView):
+class UserProfileView(LoginRequiredMixin, ListView):
     model = User
-    template_name = "profile.html"
+    template_name = "accounts/profile.html"
     slug_field = "username"
     slug_url_kwarg = "username"
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(username=self.kwargs.get("username"))
+
+    def get_context_data(self, **kwargs):
+        user = get_object_or_404(User, username=self.kwargs["username"])
+        context = super().get_context_data(**kwargs)
+        context["tweet_list"] = Tweet.objects.all()
+        context["username"] = user.username
+        return context

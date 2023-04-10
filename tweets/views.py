@@ -10,10 +10,14 @@ from .models import Tweet
 class HomeView(LoginRequiredMixin, ListView):
     template_name = "tweets/home.html"
     model = Tweet
-    context_object_name = 'tweet'
 
     def get_queryset(self):
         return Tweet.objects.filter(user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["tweet_list"] = Tweet.objects.all()
+        return context
 
 
 class TweetDetailView(LoginRequiredMixin, DetailView):

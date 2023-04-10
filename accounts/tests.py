@@ -275,11 +275,18 @@ class TestUserProfileView(TestCase):
             password="testpassword",
         )
         self.url = reverse("accounts:login")
+        self.client.force_login(self.user)
+        Tweet.objects.create(user=self.user, content="Hello!")
 
     def test_success_get(self):
-        response = self.client.get(self.url)
+        response = self.client.get(
+            reverse(
+                "accounts:user_profile",
+                kwargs={"username": self.user.username},
+            )
+        )
         context = response.context
-        self.assertQuerysetEqual(context['tweet'], Tweet.objects.filter(user=self.user))
+        self.assertQuerysetEqual(context["tweet_list"], Tweet.objects.filter(user=self.user))
 
 
 # class TestUserProfileEditView(TestCase):
