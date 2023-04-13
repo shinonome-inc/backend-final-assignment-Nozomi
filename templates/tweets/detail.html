@@ -1,11 +1,9 @@
 {% extends "base.html" %}
-{% load static %}
 
 
 {% block content %}
 <div class="container">
     <div class="alert alert-success" role="alert">
-        <p>タイトル：{{object.title}}</p>
         <p>作成者：{{object.user}}</p>
         <p>作成日：{{object.created_at}}</p>
         <p>コメント：{{object.content}}</p>

@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load static %}
 
 {% block title %}Home{% endblock %}
 
@@ -10,7 +9,8 @@
     <div class="alert alert-success" role="alert">
         <p>タイトル：<a href="{% url 'tweets:detail' item.pk %}">{{item.title}}</a></p>
         <p>作成者：{{item.user.username}}</p> 
-        <p>作成日：{{timezone.now}}</p>   
+        <p>作成日：{{item.created_at}}</p>
+        <p>内容：{{item.context}}</p>  
     </div>
     {% endfor %}
  </div>

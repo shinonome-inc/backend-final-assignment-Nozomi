@@ -271,8 +271,6 @@ class TestUserProfileView(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
             username="testuser",
-            email="test@test.com",
-            password="testpassword",
         )
         self.url = reverse("accounts:login")
         self.client.force_login(self.user)

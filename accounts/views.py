@@ -38,16 +38,13 @@ class LogoutView(auth_views.LogoutView):
 class UserProfileView(LoginRequiredMixin, ListView):
     model = User
     template_name = "accounts/profile.html"
-    slug_field = "username"
-    slug_url_kwarg = "username"
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        return queryset.filter(username=self.kwargs.get("username"))
+        return User.objects.filter(username=self.kwargs.get("username"))
 
     def get_context_data(self, **kwargs):
         user = get_object_or_404(User, username=self.kwargs["username"])
         context = super().get_context_data(**kwargs)
-        context["tweet_list"] = Tweet.objects.all()
+        context["tweet_list"] = Tweet.objects.select_related("user").filter(user=user)
         context["username"] = user.username
         return context
