@@ -20,7 +20,7 @@ class TestHomeView(TestCase):
     def test_success_get(self):
         response = self.client.get(self.url)
         self.assertQuerysetEqual(
-            response.context["object_list"], Tweet.objects.order_by("-created_at"), Tweet.objects.all()
+            response.context["tweet_list"], Tweet.objects.order_by("-created_at"), Tweet.objects.all()
         )
 
 

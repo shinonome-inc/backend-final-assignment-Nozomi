@@ -22,6 +22,8 @@
     {% endif %}
 
     {% block content %}
+      <a href={% url "tweets:home" %}>ホーム</a>
+      <a href={% url "accounts:user_profile" %}>プロフィール</a>
     {% endblock content %}
 
     

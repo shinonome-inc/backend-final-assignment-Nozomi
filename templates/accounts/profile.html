@@ -5,14 +5,14 @@
 {% block content %}
 <h1>profile</h1>
 <div class="container mt-3">
-    {% for item in user_list %}
+    {% for item in tweet_list %}
     <div>
         {{ item.user.username }}
         [{{ item.created_at }}]
+        <a href="{% url 'tweets:detail' item.pk %}">詳細</a>
     </div>
     <div>
         {{ item.content }}
-        <a href="{% url 'tweets:detail' item.pk %}">詳細</a>
     </div>
     {% endfor %}
  </div>

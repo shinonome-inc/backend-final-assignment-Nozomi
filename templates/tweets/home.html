@@ -4,6 +4,9 @@
 
 {% block content %}
 <h1>Home</h1>
+<div>
+    <a href="{% url 'tweets:create' %}">{{item.title}}</a>
+</div>
 <div class="container mt-3">
     {% for item in tweet_list %}
     <div class="alert alert-success" role="alert">

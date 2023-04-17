@@ -2,19 +2,19 @@
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, ListView
+from django.views.generic import CreateView, DeleteView, DetailView, TemplateView
 
 from .forms import TweetForm
 from .models import Tweet
 
 
-class HomeView(LoginRequiredMixin, ListView):
+class HomeView(LoginRequiredMixin, TemplateView):
     template_name = "tweets/home.html"
     model = Tweet
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["tweet_list"] = Tweet.objects.select_related("user")
+        context["tweet_list"] = Tweet.objects.select_related("user").order_by("-created_at")
         return context
 
 
@@ -37,7 +37,7 @@ class TweetCreateView(LoginRequiredMixin, CreateView):
 class TweetDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Tweet
     template_name = "tweets/delete.html"
-    success_url = reverse_lazy(settings.LOGIN_REDIRECT_URL)
+    success_url = reverse_lazy("tweets:home")
 
     def test_func(self, **kwargs):
         pk = self.kwargs["pk"]
