@@ -10,7 +10,7 @@
 <div class="container mt-3">
     {% for item in tweet_list %}
     <div class="alert alert-success" role="alert">
-        <p>作成者：{{item.user.username}}</p> 
+        <p>作成者：<a href="{% url 'accounts:user_profile' user.username %}">{{item.user.username}}</a></p> 
         <p>作成日：{{item.created_at}}</p>
         <p>内容：{{item.content}}</p> 
         <a href="{% url 'tweets:detail' item.pk %}">詳細</a>
