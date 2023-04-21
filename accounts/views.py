@@ -36,7 +36,6 @@ class LogoutView(auth_views.LogoutView):
 
 
 class UserProfileView(LoginRequiredMixin, TemplateView):
-    model = User
     template_name = "accounts/profile.html"
 
     def get_queryset(self):
