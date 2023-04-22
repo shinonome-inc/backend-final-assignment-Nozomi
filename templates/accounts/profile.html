@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}profile{% endblock %}
+
+{% block content %}
+<h1>profile</h1>
+<div class="container mt-3">
+    {% for item in tweet_list %}
+    <div>
+        {{ item.user.username }}
+        [{{ item.created_at }}]
+        <a href="{% url 'tweets:detail' item.pk %}">詳細</a>
+    </div>
+    <div>
+        {{ item.content }}
+    </div>
+    {% endfor %}
+ </div>
+{% endblock %}
