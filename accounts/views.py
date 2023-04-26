@@ -10,7 +10,7 @@ from django.views.generic import CreateView, ListView, TemplateView, View
 
 from tweets.models import Tweet
 
-from .admin import FriendShip, User
+from .admin import Friends, User
 from .forms import LoginForm, SignupForm
 
 
@@ -45,9 +45,9 @@ class UserProfileView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context["tweet_list"] = Tweet.objects.select_related("user").filter(user=user)
         context["username"] = user.username
-        context["following"] = FriendShip.objects.filter(follower=user).count()
-        context["follower"] = FriendShip.objects.filter(following=user).count()
-        context["co_following"] = FriendShip.objects.filter(following=user, follower=self.request.user).exists()
+        context["following"] = Friends.objects.filter(follower=user).count()
+        context["follower"] = Friends.objects.filter(following=user).count()
+        context["co_following"] = Friends.objects.filter(following=user, follower=self.request.user).exists()
         return context
 
 
@@ -59,12 +59,12 @@ class FollowView(LoginRequiredMixin, View):
         if follower == following:
             return HttpResponseBadRequest("自分自身を対象にできません")
 
-        if FriendShip.objects.filter(follower=follower, following=following).exists():
+        elif Friends.objects.filter(follower=follower, following=following).exists():
             messages.warning(request, "あなたはすでにフォローしています")
             return redirect("tweets:home")
 
         else:
-            FriendShip.objects.create(follower=follower, following=following)
+            Friends.objects.create(follower=follower, following=following)
             messages.success(request, "フォローしました")
             return redirect("tweets:home")
 
@@ -78,7 +78,7 @@ class UnFollowView(LoginRequiredMixin, View):
             return HttpResponseBadRequest("自分自身を対象にできません")
 
         else:
-            friendship = FriendShip.objects.filter(follower=follower, following=following)
+            friendship = Friends.objects.filter(follower=follower, following=following)
             friendship.delete()
             messages.success(request, "フォローを外しました")
             return redirect("tweets:home")
@@ -91,7 +91,7 @@ class FollowerListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = get_object_or_404(User, username=self.kwargs["username"])
-        context["follower_list"] = FriendShip.objects.select_related("follower").filter(following=user)
+        context["follower_list"] = Friends.objects.select_related("follower").filter(following=user)
         return context
 
 
@@ -102,5 +102,5 @@ class FollowingListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = get_object_or_404(User, username=self.kwargs["username"])
-        context["following_list"] = FriendShip.objects.select_related("following").filter(follower=user)
+        context["following_list"] = Friends.objects.select_related("following").filter(follower=user)
         return context
