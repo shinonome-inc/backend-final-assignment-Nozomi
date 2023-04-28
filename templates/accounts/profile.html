@@ -13,17 +13,17 @@
     </div>
 </div>
 <div>
-    {% if object.username != request.user.username %}
-    {% if co_following %}
-        <form action="{%  url 'accounts:unfollow' user.username %}" method="POST">{% csrf_token %}
-            <button type="submit">フォローを外す</button>
-        </form>
-    {% else %}
-        <form action="{%  url 'accounts:follow' user.username %}" method="POST">{% csrf_token %}
-            <button type="submit">フォローする</button>
-        </form>
-        <br>
-    {% endif %}
+    {% if item.user.username != tweet_user.username %}
+        {% if co_following %}
+            <form action="{%  url 'accounts:unfollow' tweet_user.username %}" method="POST">{% csrf_token %}
+                <button type="submit">フォローを外す</button>
+            </form>
+        {% else %}
+            <form action="{%  url 'accounts:follow' tweet_user.username %}" method="POST">{% csrf_token %}
+                <button type="submit">フォローする</button>
+            </form>
+            <br>
+        {% endif %}
     {% endif %}
 </div>
 <div class="container mt-3">

@@ -44,7 +44,7 @@ class UserProfileView(LoginRequiredMixin, TemplateView):
         user = get_object_or_404(User, username=self.kwargs["username"])
         context = super().get_context_data(**kwargs)
         context["tweet_list"] = Tweet.objects.select_related("user").filter(user=user)
-        context["username"] = user.username
+        context["tweet_user"] = user
         context["following"] = Friends.objects.filter(follower=user).count()
         context["follower"] = Friends.objects.filter(following=user).count()
         context["co_following"] = Friends.objects.filter(following=user, follower=self.request.user).exists()
@@ -53,33 +53,31 @@ class UserProfileView(LoginRequiredMixin, TemplateView):
 
 class FollowView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
-        follower = self.request.user
         following = get_object_or_404(User, username=self.kwargs["username"])
 
-        if follower == following:
+        if request.user == following:
             return HttpResponseBadRequest("自分自身を対象にできません")
 
-        elif Friends.objects.filter(follower=follower, following=following).exists():
+        elif Friends.objects.filter(follower=request.user, following=following).exists():
             messages.warning(request, "あなたはすでにフォローしています")
             return redirect("tweets:home")
 
         else:
-            Friends.objects.create(follower=follower, following=following)
+            Friends.objects.create(follower=request.user, following=following)
             messages.success(request, "フォローしました")
             return redirect("tweets:home")
 
 
 class UnFollowView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
-        follower = self.request.user
         following = get_object_or_404(User, username=self.kwargs["username"])
 
-        if follower == following:
+        if request.user == following:
             return HttpResponseBadRequest("自分自身を対象にできません")
 
         else:
-            friendship = Friends.objects.filter(follower=follower, following=following)
-            friendship.delete()
+            friends = Friends.objects.filter(follower=request.user, following=following)
+            friends.delete()
             messages.success(request, "フォローを外しました")
             return redirect("tweets:home")
 
