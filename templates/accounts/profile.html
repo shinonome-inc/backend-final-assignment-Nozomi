@@ -8,8 +8,8 @@
     <p>フォロー数:{{following}}</p>
     <p>フォロワー数:{{follower}}</p>
     <div>
-        <a href="{% url 'accounts:following_list' user.username %}">フォロー一覧</a>
-        <a href="{% url 'accounts:follower_list' user.username %}">フォロワー一覧</a>
+        <a href="{% url 'accounts:following_list' tweet_user.username %}">フォロー一覧</a>
+        <a href="{% url 'accounts:follower_list' tweet_user.username %}">フォロワー一覧</a>
     </div>
 </div>
 <div>
