@@ -45,8 +45,8 @@ class UserProfileView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context["tweet_list"] = Tweet.objects.select_related("user").filter(user=user)
         context["tweet_user"] = user
-        context["following"] = Friends.objects.filter(follower=user).count()
-        context["follower"] = Friends.objects.filter(following=user).count()
+        context["following"] = Friends.objects.select_related("user").filter(follower=user).count()
+        context["follower"] = Friends.objects.select_related("user").filter(following=user).count()
         context["co_following"] = Friends.objects.filter(following=user, follower=self.request.user).exists()
         return context
 
@@ -76,7 +76,7 @@ class UnFollowView(LoginRequiredMixin, View):
             return HttpResponseBadRequest("自分自身を対象にできません")
 
         else:
-            friends = Friends.objects.filter(follower=request.user, following=following)
+            friends = Friends.objects.select_related("user").filter(follower=request.user, following=following)
             friends.delete()
             messages.success(request, "フォローを外しました")
             return redirect("tweets:home")
