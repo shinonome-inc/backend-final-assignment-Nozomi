@@ -47,7 +47,8 @@ class UserProfileView(LoginRequiredMixin, TemplateView):
         context["tweet_user"] = user
         context["following"] = Friends.objects.select_related("user").filter(follower=user).count()
         context["follower"] = Friends.objects.select_related("user").filter(following=user).count()
-        context["co_following"] = Friends.objects.filter(following=user, follower=self.request.user).exists()
+        context["co_following"] = Friends.objects.select_related("user")\
+            .filter(following=user, follower=self.request.user).exists()
         return context
 
 
