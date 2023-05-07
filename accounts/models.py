@@ -6,7 +6,7 @@ class User(AbstractUser):
     email = models.EmailField()
 
 
-class Friends(models.Model):
+class FriendShip(models.Model):
     following = models.ForeignKey(User, related_name="follower", on_delete=models.CASCADE)
     follower = models.ForeignKey(User, related_name="following", on_delete=models.CASCADE)
 

@@ -6,9 +6,9 @@
 <h1>FollowingList</h1>
 {% if following_list %}
 <div>
-    {% for object in following_list %}
-        {% if object.following %}
-            <a href="{% url 'accounts:user_profile' object.following.username %}">{{object.following.username}}</a>
+    {% for followed_user in following_list %}
+        {% if followed_user.following %}
+            <a href="{% url 'accounts:user_profile' followed_user.following.username %}">{{followed_user.following.username}}</a>
         {% endif %}
     {% endfor %}
 </div>

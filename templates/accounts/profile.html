@@ -5,8 +5,8 @@
 {% block content %}
 <h1>profile</h1>
 <div>
-    <p>フォロー数:{{following}}</p>
-    <p>フォロワー数:{{follower}}</p>
+    <p>フォロー数:{{following_count}}</p>
+    <p>フォロワー数:{{follower_count}}</p>
     <div>
         <a href="{% url 'accounts:following_list' tweet_user.username %}">フォロー一覧</a>
         <a href="{% url 'accounts:follower_list' tweet_user.username %}">フォロワー一覧</a>
@@ -14,7 +14,7 @@
 </div>
 <div>
     {% if item.user.username != tweet_user.username %}
-        {% if co_following %}
+        {% if is_following %}
             <form action="{%  url 'accounts:unfollow' tweet_user.username %}" method="POST">{% csrf_token %}
                 <button type="submit">フォローを外す</button>
             </form>
