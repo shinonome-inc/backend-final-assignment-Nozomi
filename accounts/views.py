@@ -77,8 +77,7 @@ class UnFollowView(LoginRequiredMixin, View):
         if request.user == following:
             return HttpResponseBadRequest("自分自身を対象にできません")
 
-        else:
-            friends = FriendShip.objects.select_related("user").filter(follower=request.user, following=following)
+            friends = FriendShip.objects.filter(follower=request.user, following=following)
             friends.delete()
             messages.success(request, "フォローを外しました")
             return redirect("tweets:home")
