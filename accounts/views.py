@@ -90,7 +90,7 @@ class FollowerListView(LoginRequiredMixin, ListView):
         return FriendShip.objects.select_related("follower").filter(following=user)
 
 
-class FollowingListView(LoginRequiredMixin, ListView):
+class FollowingListView(LoginRequiredMixin, TemplateView):
     model = User
     template_name = "accounts/following_list.html"
     context_object_name = "following_friendships"
