@@ -11,4 +11,4 @@ class FriendShip(models.Model):
     follower = models.ForeignKey(User, related_name="following", on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user.username
+        return self.username

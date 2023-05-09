@@ -335,14 +335,14 @@ class TestUnfollowView(TestCase):
         FriendShip.objects.create(follower=self.user1, following=self.user2)
 
     def test_success_post(self):
-        response = self.client.post(reverse("accounts:follow", kwargs={"username": self.user2.username}))
+        response = self.client.post(reverse("accounts:unfollow", kwargs={"username": self.user2.username}))
         self.assertRedirects(
             response,
             reverse("tweets:home"),
             status_code=302,
             target_status_code=200,
         )
-        self.assertTrue(FriendShip.objects.filter(follower=self.user1, following=self.user2).exists())
+        self.assertFalse(FriendShip.objects.filter(follower=self.user1, following=self.user2).exists())
 
     def test_failure_post_with_self(self):
         response = self.client.post(reverse("accounts:unfollow", kwargs={"username": self.user1.username}))
