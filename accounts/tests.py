@@ -5,7 +5,7 @@ from django.urls import reverse
 
 from tweets.models import Tweet
 
-from .admin import FriendShip
+from .models import FriendShip
 
 User = get_user_model()
 

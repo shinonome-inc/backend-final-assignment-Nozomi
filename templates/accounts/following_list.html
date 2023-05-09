@@ -4,17 +4,11 @@
 
 {% block content %}
 <h1>FollowingList</h1>
-{% if following_friendships %}
-<div>
     {% for following_friendship in following_friendships %}
         {% if following_friendship.following %}
             <a href="{% url 'accounts:user_profile' following_friendship.following.username %}">{{following_friendship.following.username}}</a>
         {% endif %}
-    {% endfor %}
-</div>
-{% else %}
-<div>
+    {% empty %}
     <p>フォローしているユーザーはいません</p>
-</div>
-{% endif %}
+    {% endfor %}
 {% endblock %}

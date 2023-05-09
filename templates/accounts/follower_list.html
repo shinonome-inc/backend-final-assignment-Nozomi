@@ -4,17 +4,11 @@
 
 {% block content %}
 <h1>FollowerList</h1>
-{% if follower_friendships %}
-    <div>
-        {% for follower_friendship in follower_friendships %}
-            {% if follower_friendship.follower %}
-                <a href="{% url 'accounts:user_profile' follower_friendship.follower.username %}">{{follower_friendship.follower.username}}</a>
-            {% endif %}
-        {% endfor %}
-    </div>
-{% else %}
-<div>
-    <p>フォローされているユーザーはいません</p>
-</div>
-{% endif %}
+    {% for follower_friendship in follower_friendships %}
+        {% if follower_friendship.follower %}
+            <a href="{% url 'accounts:user_profile' follower_friendship.follower.username %}">{{follower_friendship.follower.username}}</a>
+        {% endif %}
+    {% empty %}
+        <p>フォローされているユーザーはいません</p>
+    {% endfor %}
 {% endblock %}
