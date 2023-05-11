@@ -11,4 +11,4 @@ class FriendShip(models.Model):
     follower = models.ForeignKey(User, related_name="following_friendships", on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.following, self.follower
+        return "{} {}".format(self.following, self.follower)
