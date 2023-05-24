@@ -10,10 +10,12 @@
 <div class="container mt-3">
     {% for tweet in tweet_list %}
     <div class="alert alert-success" role="alert">
+        {% include "tweets/like_js.html" %}
         <p>作成者：<a href="{% url 'accounts:user_profile' tweet.user.username %}">{{tweet.user.username}}</a></p> 
         <p>作成日：{{tweet.created_at}}</p>
         <p>内容：{{tweet.content}}</p> 
         <a href="{% url 'tweets:detail' tweet.pk %}">詳細</a>
+        {% include "tweets/like.html" %}
     </div>
     {% endfor %}
  </div>

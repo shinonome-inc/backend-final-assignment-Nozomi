@@ -1,0 +1,47 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<script>
+    const getCookie = (name) => {
+        if (document.cookie && document.cookie !== '') {
+            for (const cookie of document.cookie.split(';')) {
+                const [key, value] = cookie.trim().split('=')
+                if (key === name) {
+                    return decodeURIComponent(value)
+                }
+            }
+        }
+    }
+    const csrftoken = getCookie('csrftoken')
+
+    const changeLike = async (id) => {
+        const like_button = document.querySelector("#" + id)
+        const url = like_button.dataset.url;
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrftoken,
+            }
+        });
+        const tweet_data = await response.json();
+        changeStyle(tweet_data, like_button);
+    }
+
+    const changeStyle = (tweet_data, like_button) => {
+        const like_count = document.querySelector(".count_" + tweet_data.tweet_id)
+        if (tweet_data.is_liked) {
+            unlike_url = tweet_data.unlike_url;
+            like_button.setAttribute("data-url", unlike_url);
+            like_button.innerHTML = "<i class='fas fa-heart'></i>";
+            like_button.style.color = "red";
+            like_count.textContent = tweet_data.like_count;
+        } else {
+            like_url = tweet_data.like_url;
+            like_button.setAttribute("data-url", like_url);
+            like_button.innerHTML = "<i class='far fa-heart'></i>";
+            like_button.style.color = "";
+            like_count.textContent = tweet_data.like_count;
+        }
+    }
+</script>

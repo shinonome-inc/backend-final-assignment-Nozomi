@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, TemplateView, View
 
-from tweets.models import Tweet
+from tweets.models import Like, Tweet
 
 from .admin import User
 from .forms import LoginForm, SignupForm
@@ -49,6 +49,10 @@ class UserProfileView(LoginRequiredMixin, TemplateView):
         context["following_count"] = FriendShip.objects.filter(follower=user).count()
         context["follower_count"] = FriendShip.objects.filter(following=user).count()
         context["is_following"] = FriendShip.objects.filter(following=user, follower=self.request.user).exists()
+        liked_list = (
+            Like.objects.select_related("tweet").filter(user=self.request.user).values_list("tweet", flat=True)
+        )
+        context["liked_list"] = liked_list
         return context
 
 
