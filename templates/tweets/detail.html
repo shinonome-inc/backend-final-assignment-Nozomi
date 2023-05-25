@@ -7,7 +7,8 @@
         <p>作成者：<a href="{% url 'accounts:user_profile' object.user.username %}">{{object.user.username}}</a></p>
         <p>作成日：{{object.created_at}}</p>
         <p>コメント：{{object.content}}</p>
-        <p>いいね数</p><span id="count_{{tweet.id}}">{{tweet.likes.count}}</span>
+        {% include "tweets/like.html" %}
+        {% include "tweets/like_js.html" %}
 
         {% if object.user == request.user %}
         <a href="{% url 'tweets:delete' tweet.pk %}" class="btn btn-danger ms-3" tabindex="-1" role="button" aria-disabled="true">削除</a>

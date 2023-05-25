@@ -17,12 +17,24 @@ class HomeView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["tweet_list"] = Tweet.objects.select_related("user").order_by("-created_at")
+        liked_list = (
+            Like.objects.select_related("tweet").filter(user=self.request.user).values_list("tweet_id", flat=True)
+        )
+        context["liked_list"] = liked_list
         return context
 
 
 class TweetDetailView(LoginRequiredMixin, DetailView):
     model = Tweet
     template_name = "tweets/detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        liked_list = (
+            Like.objects.select_related("tweet").filter(user=self.request.user).values_list("tweet_id", flat=True)
+        )
+        context["liked_list"] = liked_list
+        return context
 
 
 class TweetCreateView(LoginRequiredMixin, CreateView):
