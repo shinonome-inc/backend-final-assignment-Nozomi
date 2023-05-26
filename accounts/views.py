@@ -50,7 +50,7 @@ class UserProfileView(LoginRequiredMixin, TemplateView):
         context["follower_count"] = FriendShip.objects.filter(following=user).count()
         context["is_following"] = FriendShip.objects.filter(following=user, follower=self.request.user).exists()
         liked_list = (
-            Like.objects.select_related("tweet").filter(user=self.request.user).values_list("tweet", flat=True)
+            Like.objects.prefetch_related("tweet").filter(user=self.request.user).values_list("tweet_id", flat=True)
         )
         context["liked_list"] = liked_list
         return context
