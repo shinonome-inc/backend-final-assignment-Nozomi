@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "tweets.apps.TweetsConfig",
     "welcome.apps.WelcomeConfig",
-    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
@@ -51,7 +50,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "mysite.urls"
@@ -132,7 +130,3 @@ AUTH_USER_MODEL = "accounts.User"
 LOGIN_URL = "accounts:login"
 LOGIN_REDIRECT_URL = "tweets:home"
 LOGOUT_REDIRECT_URL = "accounts:login"
-
-DEBUG_TOOLBAR_CONFIG = {
-    "SHOW_TOOLBAR_CALLBACK": lambda request: True,
-}
