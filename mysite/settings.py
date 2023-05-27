@@ -134,5 +134,5 @@ LOGIN_REDIRECT_URL = "tweets:home"
 LOGOUT_REDIRECT_URL = "accounts:login"
 
 DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK': lambda request: True,
+    "SHOW_TOOLBAR_CALLBACK": lambda request: True,
 }
