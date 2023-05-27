@@ -10,9 +10,8 @@ from django.views.generic import CreateView, ListView, TemplateView, View
 
 from tweets.models import Like, Tweet
 
-from .admin import User
 from .forms import LoginForm, SignupForm
-from .models import FriendShip
+from .models import FriendShip, User
 
 
 class SignupView(CreateView):
