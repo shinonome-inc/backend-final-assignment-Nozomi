@@ -27,15 +27,17 @@
     {% endif %}
 </div>
 <div class="container mt-3">
-    {% for item in tweet_list %}
+    {% for tweet in tweet_list %}
     <div>
-        {{ item.user.username }}
-        [{{ item.created_at }}]
-        <a href="{% url 'tweets:detail' item.pk %}">詳細</a>
+        {{ tweet.user.username }}
+        [{{ tweet.created_at }}]
+        <a href="{% url 'tweets:detail' tweet.pk %}">詳細</a>
     </div>
+    {% include "tweets/like.html" %}
     <div>
-        {{ item.content }}
+        {{ tweet.content }}
     </div>
     {% endfor %}
- </div>
+    </div>
+    {% include "tweets/like_js.html" %}
 {% endblock %}

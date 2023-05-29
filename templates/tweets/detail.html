@@ -4,9 +4,11 @@
 {% block content %}
 <div class="container">
     <div class="alert alert-success" role="alert">
-        <p>作成者：<a href="{% url 'accounts:user_profile' object.user.username %}">{{object.user.username}}</a></p>
-        <p>作成日：{{object.created_at}}</p>
-        <p>コメント：{{object.content}}</p>
+        <p>作成者：<a href="{% url 'accounts:user_profile' tweet.user.username %}">{{tweet.user.username}}</a></p>
+        <p>作成日：{{tweet.created_at}}</p>
+        <p>コメント：{{tweet.content}}</p>
+        {% include "tweets/like.html" %}
+        {% include "tweets/like_js.html" %}
 
         {% if object.user == request.user %}
         <a href="{% url 'tweets:delete' tweet.pk %}" class="btn btn-danger ms-3" tabindex="-1" role="button" aria-disabled="true">削除</a>
